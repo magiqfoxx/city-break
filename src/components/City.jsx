@@ -3,7 +3,6 @@ import geoNames from "./api/geoNames";
 import Logo from "./Logo";
 import BasicInfo from "./BasicInfo";
 import Landmarks from "./Landmarks";
-import Map from "./Map";
 import Weather from "./Weather";
 
 class City extends Component {
@@ -29,10 +28,18 @@ class City extends Component {
     return (
       <React.Fragment>
         <Logo />
-        <main className="main">
-          <h2 className="main--title">{this.cityName}</h2>
+        <main className="main--container">
+          <h2 className="city--title">{this.cityName}</h2>
           <BasicInfo city={this.state.city} />
-          {this.state.city ? <Weather city={this.state.city} /> : null}
+          {this.state.city ? (
+            <React.Fragment>
+              <Weather city={this.state.city} />
+              <Landmarks
+                cityLAT={this.state.city.lat}
+                cityLNG={this.state.city.lng}
+              />
+            </React.Fragment>
+          ) : null}
         </main>
       </React.Fragment>
     );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import googlePlaces from "./api/googlePlaces";
-import { google } from "google-maps-react";
+import LandmarkSlate from "./LandmarkSlate";
 
 class Landmarks extends Component {
   state = {};
@@ -8,48 +8,59 @@ class Landmarks extends Component {
   lat = this.props.cityLAT;
   lng = this.props.cityLNG;
 
-  getLandmarks = () => {
-    const cityLocation = new google.maps.LatLng(this.lat, this.lng);
+  getPOI = allLandmarks => {
+    let landmarks = allLandmarks.data.results;
 
-    const request = {
-      location: cityLocation,
-      radius: 1000
-    };
-    let service = new google.maps.places.PlacesService(this.map);
+    for (let landmark of landmarks) {
+      let newLandmarks = [];
 
-    service.nearbySearch(request, (results, status) => {
-      console.log(results, status);
-    });
+      if (
+        landmark.types.includes("point_of_interest") &&
+        !landmark.types.includes("travel_agency")
+      ) {
+        console.log(landmark);
+        newLandmarks.push(landmark);
+        console.log(newLandmarks);
+      }
+
+      this.setState({ landmarks: newLandmarks });
+    }
   };
 
   getLandmarksData = async () => {
     try {
       const response = await googlePlaces.get("", {
         params: {
-          location: `${this.lat}, ${this.lng}`
+          location: `${this.lat},${this.lng}`,
+          rankby: "prominence",
+          keyword: "must see"
         }
       });
-      this.setState({
-        landmarks: response
-      });
+
+      this.getPOI(response);
     } catch (error) {
       console.log(error);
     }
   };
   componentWillMount() {
-    //this.getLandmarksData();
-    this.getLandmarks();
+    this.getLandmarksData();
   }
 
   renderContent = () => {
-    if (this.props.city) {
-      return <div>Landmarks</div>;
+    if (this.state.landmarks) {
+      return this.state.landmarks.slice(0, 4).map((landmark, i) => {
+        return <LandmarkSlate landmark={landmark} key={i} />;
+      });
     } else {
       return "Loading...";
     }
   };
   render() {
-    return this.renderContent();
+    return (
+      <div className="component component--landmarks">
+        {this.renderContent()}
+      </div>
+    );
   }
 }
 

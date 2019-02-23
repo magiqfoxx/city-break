@@ -24,3 +24,4 @@ yarn-error.log*
 
 /img/other
 /src/components/api
+/src/components/Map.jsx

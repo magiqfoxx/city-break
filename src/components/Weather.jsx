@@ -43,10 +43,10 @@ class Weather extends Component {
       return "Loading...";
     } else {
       return (
-        <div className="main--component main--component--weather">
-          <WeatherSlate weather={this.state.weather0} />
-          <WeatherSlate weather={this.state.weather1} />
-          <WeatherSlate weather={this.state.weather2} />
+        <div className="component component--weathers">
+          <WeatherSlate day="Today" weather={this.state.weather0} />
+          <WeatherSlate day="Tomorrow" weather={this.state.weather1} />
+          <WeatherSlate day="The next day" weather={this.state.weather2} />
         </div>
       );
     }

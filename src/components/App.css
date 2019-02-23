@@ -75,12 +75,14 @@ nav ul li {
 }
 main {
   margin: 1rem 5rem;
+  display: flex;
+  flex-direction: column;
 }
-.main {
+.main--container {
   background-color: rgba(208, 200, 200, 0.4);
   padding: 2rem;
   text-align: center;
-  max-height: 80vh;
+  /*max-height: 80vh;*/
 }
 .title {
   font-size: 3rem;
@@ -141,23 +143,19 @@ footer ul li {
   display: block;
   margin: 1rem auto;
 }
-.main--title {
-  float: left;
+.city--title {
 }
-.main--component {
+.component {
   background-color: rgba(106, 93, 93, 0.15);
 }
-.main--component--basic-info {
+.component--basic-info {
   max-width: 30vw;
-  float: right;
+  text-align: right;
+  line-height: 2rem;
 }
-.map {
-  max-width: 30vw;
-}
-.main--component--weather {
+.component--weathers {
   display: flex;
   min-height: 150px;
-  float: left;
 }
 .component--weather {
   min-width: 100px;
@@ -167,4 +165,12 @@ footer ul li {
 }
 .component--weather img {
   margin: 0.5rem;
+}
+.component--landmarks {
+  display: flex;
+  flex-direction: row;
+}
+.component--landmark {
+  background-color: rgba(255, 248, 248, 0.3);
+  margin: 1rem;
 }
