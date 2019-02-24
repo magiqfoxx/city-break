@@ -10,17 +10,14 @@ class Landmarks extends Component {
 
   getPOI = allLandmarks => {
     let landmarks = allLandmarks.data.results;
-
+    let newLandmarks = [];
     for (let landmark of landmarks) {
-      let newLandmarks = [];
-
       if (
         landmark.types.includes("point_of_interest") &&
-        !landmark.types.includes("travel_agency")
+        !landmark.types.includes("travel_agency") &&
+        landmark.rating > 4
       ) {
-        console.log(landmark);
         newLandmarks.push(landmark);
-        console.log(newLandmarks);
       }
 
       this.setState({ landmarks: newLandmarks });
@@ -49,7 +46,13 @@ class Landmarks extends Component {
   renderContent = () => {
     if (this.state.landmarks) {
       return this.state.landmarks.slice(0, 4).map((landmark, i) => {
-        return <LandmarkSlate landmark={landmark} key={i} />;
+        return (
+          <LandmarkSlate
+            landmark={landmark}
+            key={i}
+            photoRef={landmark.photos[0].photo_reference || null}
+          />
+        );
       });
     } else {
       return "Loading...";
@@ -58,7 +61,8 @@ class Landmarks extends Component {
   render() {
     return (
       <div className="component component--landmarks">
-        {this.renderContent()}
+        <h3>Landmarks</h3>
+        <div className="component--landmarks--list">{this.renderContent()}</div>
       </div>
     );
   }
