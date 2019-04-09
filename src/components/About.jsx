@@ -5,7 +5,7 @@ const About = () => {
   return (
     <React.Fragment>
       <Logo />
-      <main className="main">
+      <main className="main--container__other">
         We are great and very nice
         <img className="image" src={require("../img/dog.jpg")} alt="dog" />
       </main>

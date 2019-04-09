@@ -5,7 +5,7 @@ const Contact = () => {
   return (
     <React.Fragment>
       <Logo />
-      <main className="main">
+      <main className="main--container__other">
         To contact please scream LOUDLY!
         <img className="image" src={require("../img/woods.jpg")} alt="woods" />
       </main>

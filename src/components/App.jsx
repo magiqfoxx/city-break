@@ -33,6 +33,7 @@ class App extends Component {
         <div className="background" />
         <div className="body">
           <Nav />
+
           <Switch>
             <Route path="/city/:city" component={City} />
             <Route path="/about-us" component={About} />

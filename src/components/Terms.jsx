@@ -5,7 +5,7 @@ const Terms = () => {
   return (
     <React.Fragment>
       <Logo />
-      <main className="main">Just be nice.</main>
+      <main className="main--container__other">Just be nice.</main>
     </React.Fragment>
   );
 };
