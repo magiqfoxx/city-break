@@ -10,6 +10,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8"
   },
+  "homepage": "http://katcodes.com/city-break",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

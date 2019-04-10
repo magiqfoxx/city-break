@@ -12,49 +12,72 @@ const BasicInfo = props => {
         "m"
       );
     } else {
-      return population / 1000 + "t";
+      return (
+        population.substring(0, population.length - 3) +
+        "." +
+        population.substring(population.length - 3)
+      );
     }
   };
   function addPlus(lng) {
-    if (lng[0] !== "+") {
+    if (lng[0] !== "-") {
       return `+${lng}`;
     } else {
       return lng;
     }
   }
+  //HOOKS
   const [timeNow, setTimeNow] = useState("");
+  const [countryData, setCountryData] = useState({});
 
-  const getCityData = async cityName => {
-    const cityId = await geoDB.get("cities?", {
-      params: {
-        limit: 5,
-        location: `${props.city.lat}${addPlus(props.city.lng)}`,
-        radius: 1000
-      }
-    });
-    let wikiDataIdCity;
-    //the first one shows up as the region or sth and doesn't have the country's wikiDataId
-    if (cityId.data.data[0].wikiDataId) {
-      wikiDataIdCity = cityId.data.data[0].wikiDataId;
-    } else {
-      wikiDataIdCity = cityId.data.data[1].wikiDataId;
+  const getCityTime = async cityName => {
+    try {
+      const GeoDBCityId = await geoDB.get("cities?", {
+        params: {
+          limit: 5,
+          location: `${props.city.lat}${addPlus(props.city.lng)}`,
+          radius: 1000
+        }
+      });
+      const id = GeoDBCityId.data.data[0].id;
+      const time = await geoDB.get(`cities/${id}/time`);
+      setTimeNow(time.data.data);
+    } catch (error) {
+      console.log(error);
     }
-
-    const time = await geoDB.get(`cities/${wikiDataIdCity}/time`, {});
-    setTimeNow(time.data.data);
-
-    const countryId = await geoDB.get(
-      `countries?namePrefix=${props.city.countryName}`,
-      {}
-    );
-    const wikiDataIdCountry = countryId.data.data[0].wikiDataId;
-
-    const cityData = await geoDB.get(`countries/${wikiDataIdCountry}`);
+  };
+  const getCountryId = async countryName => {
+    //do I need this for anything?
+    try {
+      const countryId = await geoDB.get(
+        `countries?namePrefix=${props.city.countryName}`
+      );
+      const wikiDataIdCountry = countryId.data.data[0].wikiDataId;
+      const data = await geoDB.get(`countries/${wikiDataIdCountry}`);
+      setCountryData(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const renderContent = () => {
     if (!props.city || !timeNow) {
-      return "Loading...";
+      return (
+        <div className="lds-default">
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      );
     } else {
       return (
         <div className="component component--basic-info">
@@ -70,11 +93,13 @@ const BasicInfo = props => {
       );
     }
   };
+
   useEffect(() => {
-    if (props.city) {
-      getCityData(props.city.cityName);
+    if (props.city && !timeNow) {
+      getCityTime(props.city.cityName);
+      getCountryId(props.city.countryName);
     }
-  });
+  }, [props.city]);
 
   return renderContent();
 };

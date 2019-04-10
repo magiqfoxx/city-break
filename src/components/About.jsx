@@ -6,11 +6,41 @@ const About = () => {
     <React.Fragment>
       <Logo />
       <main className="main--container__other">
-        We are great and very nice
-        <img className="image" src={require("../img/dog.jpg")} alt="dog" />
+        <div className="component component--about">
+          <h2>The apis I'm using:</h2>
+          <ul>
+            <li>
+              <a href="http://geodb-cities-api.wirefreethought.com">
+                GeoDB for city data{" "}
+              </a>
+            </li>
+            <li>
+              <a href="https://developers.google.com/places/web-service/search">
+                Google Places for Landmarks
+              </a>
+            </li>
+            <li>
+              <a href="https://restcountries.eu">
+                REST Countries for data about the country
+              </a>
+            </li>
+            <li>
+              <a href="https://www.metaweather.com/api/">
+                MetaWeather for weather data
+              </a>
+            </li>
+            <li>
+              <a href="https://cors-anywhere.herokuapp.com">
+                CORS-Anywhere for not being locked out
+              </a>
+            </li>
+          </ul>
+        </div>
       </main>
     </React.Fragment>
   );
 };
 
 export default About;
+
+/*<img className="image" src={require("../img/dog.jpg")} alt="dog" />*/

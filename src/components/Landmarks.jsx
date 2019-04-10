@@ -55,7 +55,22 @@ class Landmarks extends Component {
         );
       });
     } else {
-      return "Loading...";
+      return (
+        <div className="lds-default">
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      );
     }
   };
   render() {

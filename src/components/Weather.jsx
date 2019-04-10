@@ -40,7 +40,22 @@ class Weather extends Component {
 
   renderContent = () => {
     if (!this.state.weather0) {
-      return "Loading...";
+      return (
+        <div className="lds-default">
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      );
     } else {
       return (
         <div className="component component--weathers">

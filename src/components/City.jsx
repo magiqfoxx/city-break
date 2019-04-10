@@ -35,12 +35,12 @@ class City extends Component {
 
           {this.state.city ? (
             <React.Fragment>
+              <Weather city={this.state.city} />
               <CityInfo city={this.state.city} />
-              {/*<Weather city={this.state.city} />
               <Landmarks
                 cityLAT={this.state.city.lat}
                 cityLNG={this.state.city.lng}
-              />*/}
+              />
             </React.Fragment>
           ) : null}
         </main>

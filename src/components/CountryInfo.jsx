@@ -4,7 +4,7 @@ import restCountries from "./api/rest-countries";
 
 class CityInfo extends Component {
   state = {};
-  //<img src="data:image/svg+xml;utf8,<svg ... > ... </svg>" />
+
   renderPopulation = population => {
     if (population > 1000000) {
       return (
@@ -14,35 +14,56 @@ class CityInfo extends Component {
         "m"
       );
     } else {
-      return population / 1000 + "t";
+      return (
+        population.substring(0, population.length - 3) +
+        "." +
+        population.substring(population.length - 3)
+      );
     }
   };
   getCountryData = async cityName => {
-    await restCountries
-      .get(`${this.props.city.countryName}`, {})
-      .then(response => {
-        let data = response.data[0];
-
-        this.setState({
-          currencyName: data.currencies[0].name,
-          currencySymbol: data.currencies[0].symbol,
-          countryData: data,
-          callingCode: data.callingCodes,
-          capital: data.capital,
-          flag2: data.flag,
-          gini: data.gini,
-          language: data.languages[0].name,
-          countryPopulation: data.population,
-          region: data.region
-        });
+    try {
+      const response = await restCountries.get(
+        `${this.props.city.countryName}`,
+      );
+      let data = response.data[0];
+      this.setState({
+        currencyName: data.currencies[0].name,
+        currencySymbol: data.currencies[0].symbol,
+        countryData: data,
+        callingCode: data.callingCodes,
+        capital: data.capital,
+        flag2: data.flag,
+        gini: data.gini,
+        language: data.languages[0].name,
+        countryPopulation: data.population,
+        region: data.region
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
   componentWillMount() {
     this.getCountryData(this.props.city.cityName);
   }
   renderComponent = () => {
     if (!this.props.city || !this.state.capital) {
-      return "Loading...";
+      return (
+        <div className="lds-default">
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      );
     } else {
       return (
         <div className="component component--city-info component--basic-info">
