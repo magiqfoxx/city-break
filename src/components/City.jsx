@@ -6,10 +6,16 @@ import CityInfo from "./CountryInfo";
 import Landmarks from "./Landmarks";
 import Weather from "./Weather";
 
+/* Add: local news, booking com airbnb? flights */
 class City extends Component {
   state = {};
+
   //this.props.match.params.city comes from the router /city/:city
   cityName = this.props.match.params.city;
+
+  componentWillMount() {
+    this.getCityData(this.cityName); //search is made from term in address bar
+  }
 
   getCityData = async city => {
     const cityResponse = await geoNames.get("", {
@@ -21,9 +27,6 @@ class City extends Component {
       city: cityResponse.data.geonames[0]
     });
   };
-  componentWillMount() {
-    this.getCityData(this.cityName); //search is made from term in address bar
-  }
 
   render() {
     return (

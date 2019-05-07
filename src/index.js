@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
-import App from "./components/App";
+import App from "./App";
 
 ReactDOM.render(
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
+  <HashRouter>
     <App />
-  </BrowserRouter>,
+  </HashRouter>,
   document.querySelector("#root")
 );

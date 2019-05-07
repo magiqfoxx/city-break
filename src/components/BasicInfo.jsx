@@ -12,10 +12,11 @@ const BasicInfo = props => {
         "m"
       );
     } else {
+      let populationStr = population.toString();
       return (
-        population.substring(0, population.length - 3) +
+        populationStr.substring(0, populationStr.length - 3) +
         "." +
-        population.substring(population.length - 3)
+        populationStr.substring(populationStr.length - 3)
       );
     }
   };

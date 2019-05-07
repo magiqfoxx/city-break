@@ -24,7 +24,7 @@ class CityInfo extends Component {
   getCountryData = async cityName => {
     try {
       const response = await restCountries.get(
-        `${this.props.city.countryName}`,
+        `${this.props.city.countryName}`
       );
       let data = response.data[0];
       this.setState({
@@ -67,7 +67,11 @@ class CityInfo extends Component {
     } else {
       return (
         <div className="component component--city-info component--basic-info">
-          <img src={this.state.flag2} className="flag" />
+          <img
+            src={this.state.flag2}
+            className="flag"
+            alt={`flag of ${this.props.city.countryName}`}
+          />
           <h3>Country: {this.props.city.countryName}</h3>
           <h3>Capital: {this.state.capital}</h3>
           <h3>
