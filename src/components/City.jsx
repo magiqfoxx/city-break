@@ -5,6 +5,7 @@ import BasicInfo from "./BasicInfo";
 import CityInfo from "./CountryInfo";
 import Landmarks from "./Landmarks";
 import Weather from "./Weather";
+import News from "./News";
 
 /* Add: local news, booking com airbnb? flights */
 class City extends Component {
@@ -42,6 +43,10 @@ class City extends Component {
               <Landmarks
                 cityLAT={this.state.city.lat}
                 cityLNG={this.state.city.lng}
+              />
+              <News
+                country={this.state.city.countryCode}
+                countryName={this.state.city.countryName}
               />
             </React.Fragment>
           ) : null}

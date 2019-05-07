@@ -30,6 +30,14 @@ const About = () => {
               </a>
             </li>
             <li>
+              <a href="cse.google.com">
+                Google Search for the pictures of landmarks
+              </a>
+            </li>
+            <li>
+              <a href="newsapi.org">NewsApi for news</a>
+            </li>
+            <li>
               <a href="https://cors-anywhere.herokuapp.com">
                 CORS-Anywhere for not being locked out
               </a>
