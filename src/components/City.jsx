@@ -35,7 +35,6 @@ class City extends Component {
         <main className="main--container">
           <h2 className="city--title">{this.cityName}</h2>
           <BasicInfo city={this.state.city} />
-
           {this.state.city ? (
             <React.Fragment>
               <Weather city={this.state.city} />

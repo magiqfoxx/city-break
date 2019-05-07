@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import googlePlaces from "./api/googlePlaces";
-import LandmarkSlate from "./LandmarkSlate";
+import NewLandmarkSlate from "./NewLandmarkSlate";
 
 class Landmarks extends Component {
   state = {};
@@ -46,13 +46,7 @@ class Landmarks extends Component {
   renderContent = () => {
     if (this.state.landmarks) {
       return this.state.landmarks.slice(0, 4).map((landmark, i) => {
-        return (
-          <LandmarkSlate
-            landmark={landmark}
-            key={i}
-            photoRef={landmark.photos[0].photo_reference || null}
-          />
-        );
+        return <NewLandmarkSlate landmark={landmark} key={i} />;
       });
     } else {
       return (
