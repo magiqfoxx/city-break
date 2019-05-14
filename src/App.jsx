@@ -4,14 +4,13 @@ import { withRouter } from "react-router-dom";
 
 import Nav from "./components/Nav";
 import Home from "./components/Home";
-import City from "./components/City";
+import City from "./components/City/City";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Partners from "./components/Partners";
 import Terms from "./components/Terms";
 import Page404 from "./Page404";
 import Footer from "./components/Footer";
-import Routing from "./Routing";
 
 import "./App.css";
 

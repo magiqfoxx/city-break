@@ -1,29 +1,14 @@
 import React, { Component } from "react";
-import googlePlacesPhoto from "./api/googlePlacesPhoto";
+
+import { getPhoto } from "./helpers.js";
 
 class LandmarkSlate extends Component {
   state = {};
 
-  photo;
-
-  getPhoto = async () => {
-    try {
-      const response = await googlePlacesPhoto.get("", {
-        params: {
-          photoreference: this.props.photoRef,
-          maxwidth: 300
-        }
-      });
-      this.setState({ photo: response });
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  componentWillMount = () => {
+  componentDidMount = () => {
     if (this.props.photoRef) {
-      //this.setState({photo : this.getPhoto()});
-      this.photo = this.props.landmark.icon;
+      this.setState({ photo: getPhoto() });
+      //this.photo = this.props.landmark.icon;
     } else {
       this.photo = this.props.landmark.icon;
     }
@@ -33,7 +18,11 @@ class LandmarkSlate extends Component {
     return (
       <div className="component--landmark">
         <h3>{this.props.landmark.name}</h3>
-        <img className="icon" src={this.photo} alt={this.props.landmark.name} />
+        <img
+          className="icon"
+          src={this.state.photo}
+          alt={this.props.landmark.name}
+        />
         {/*<img
           src={`https://cors-anywhere.herokuapp.com/${this.state.photo}`}
           alt={this.props.landmark.name}

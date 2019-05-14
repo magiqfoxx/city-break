@@ -2,6 +2,7 @@ import React from "react";
 
 const WeatherSlate = props => {
   const temp = Math.round(props.weather.the_temp) + "°C";
+
   return (
     <React.Fragment>
       <div className="component--weather">

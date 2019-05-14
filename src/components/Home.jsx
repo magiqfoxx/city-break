@@ -12,6 +12,7 @@ const Home = props => {
       <div className="title logo">
         <Link to="/">City Break</Link>
       </div>
+      <p>hi</p>
       <hr />
       <div className="sub-title">Where do you want to go?</div>
       <SearchBar onFormSubmit={onFormSubmit} />

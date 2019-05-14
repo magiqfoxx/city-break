@@ -38,6 +38,16 @@ const About = () => {
               <a href="newsapi.org">NewsApi for news</a>
             </li>
             <li>
+              <a href="https://rapidapi.com/user/skyscanner">
+                Skyscanner for flights
+              </a>
+            </li>
+            <li>
+              <a href="https://aviation-edge.com/developers/">
+                Aviation Edge for Airports
+              </a>
+            </li>
+            <li>
               <a href="https://cors-anywhere.herokuapp.com">
                 CORS-Anywhere for not being locked out
               </a>

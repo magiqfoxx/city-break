@@ -42,7 +42,7 @@ class Landmarks extends Component {
       console.log(error);
     }
   };
-  componentWillMount() {
+  componentDidMount() {
     this.getLandmarksData();
   }
 
