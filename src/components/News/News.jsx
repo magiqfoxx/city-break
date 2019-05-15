@@ -3,18 +3,26 @@ import React, { Component } from "react";
 import OneNews from "./OneNews";
 import Loading from "../Loading";
 
-import { getNews } from "./helpers.js";
+import { getNewsData } from "./helpers.js";
 
 class News extends Component {
   state = {};
 
+  getNews = async () => {
+    const news = await getNewsData(this.props.country);
+    this.props.setNews({ news });
+    //this.setState({ news });
+  };
   componentDidMount() {
-    this.setState({ news: getNews(this.props.country) });
+    //avoid sending API request every time user clicks the button
+    //DOESN'T WORK
+    if (!this.props.news) {
+      this.getNews();
+    }
   }
-
   renderContent = () => {
-    if (this.state.news) {
-      return this.state.news.slice(0, 4).map(news => {
+    if (this.props.news) {
+      return this.props.news.slice(0, 4).map(news => {
         return <OneNews news={news} key={news.title} />;
       });
     } else {

@@ -1,6 +1,6 @@
 import newsApi from "../api/newsApi";
 
-export const getNews = async country => {
+export const getNewsData = async country => {
   try {
     const response = await newsApi.get("", {
       params: {

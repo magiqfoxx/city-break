@@ -35,7 +35,7 @@ export const getCityTime = async city => {
     });
     const id = GeoDBCityId.data.data[0].id;
     const time = await geoDB.get(`cities/${id}/time`);
-    return time;
+    return time.data.data;
   } catch (error) {
     console.log(error);
   }

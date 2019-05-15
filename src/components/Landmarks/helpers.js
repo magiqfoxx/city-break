@@ -26,7 +26,8 @@ export const getLandmarksData = async (lat, lng) => {
         keyword: "must see"
       }
     });
-    getPlacesOfInterest(response);
+    //return getPlacesOfInterest(response);
+    return response.data.results;
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +41,6 @@ export const getPhoto = async photoRef => {
         maxwidth: 300
       }
     });
-    return response;
     return response;
   } catch (error) {
     console.log(error);

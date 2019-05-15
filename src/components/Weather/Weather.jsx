@@ -8,13 +8,16 @@ import { getWeather } from "./helpers.js";
 class Weather extends Component {
   state = {};
 
-  componentDidMount() {
-    const weathers = getWeather();
+  getWeather = async () => {
+    const weathers = await getWeather(this.props.city.lat, this.props.city.lng);
     this.setState({
       weather0: weathers[0],
       weather1: weathers[1],
       weather2: weathers[2]
     });
+  };
+  componentDidMount() {
+    this.getWeather();
   }
 
   renderContent = () => {

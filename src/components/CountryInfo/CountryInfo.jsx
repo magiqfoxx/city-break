@@ -7,16 +7,20 @@ import { renderPopulation, getCountryData } from "./helpers.js";
 class CityInfo extends Component {
   state = {};
 
-  componentDidMount() {
-    const countryData = getCountryData(this.props.city);
+  getCountryInfo = async () => {
+    const countryData = await getCountryData(this.props.city);
+    console.log(countryData);
     this.setState(countryData);
+  };
+  componentDidMount() {
+    this.getCountryInfo();
   }
   renderComponent = () => {
     if (!this.props.city || !this.state.capital) {
       return <Loading />;
     } else {
       return (
-        <div className="component component--city-info component--basic-info">
+        <div className="component component--country-info">
           <img
             src={this.state.flag2}
             className="flag"

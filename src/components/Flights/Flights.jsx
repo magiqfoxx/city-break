@@ -15,63 +15,71 @@ import quotesResponse from "./quotesResponse";
 class Flights extends Component {
   state = {};
 
-  getAirports = () => {
-    //gets airport closest to location
-    const getDestinationAirport = getNearestAirport(
+  //aviation-edge gives nonsense response for a location
+  //works for France, but maybe not Poland?
+  //gives back Brighton, UK(?) as nearest airports/stations - tested on the website too
+
+  getDestinationAirport = async () => {
+    const destinationAirport = await getNearestAirport(
       this.props.destinationCity.lat,
       this.props.destinationCity.lng
     );
-
-    const getOriginAirport = getNearestAirport(
+    this.setState({ destinationAirport });
+    this.getDestinationPort();
+  };
+  getOriginAirport = async () => {
+    const originAirport = await getNearestAirport(
       this.props.originCityLat,
       this.props.originCityLng
     );
+    this.setState({ originAirport });
+    console.log(originAirport);
+    //this.getOriginPort();
   };
-  getAirportsFromFile = () => {
-    this.setState({
-      destinationAirport: aiports[0],
-      originAirport: aiports[1]
-    });
-  };
-  getPorts = async () => {
-    //this is specific to skyscanner
-    const destinationPort = getPort(
+
+  getDestinationPort = async () => {
+    const destinationPort = await getPort(
       await this.props.destinationCity,
       await this.state.destinationAirport
     );
+    this.setState({ destinationPort });
+  };
 
-    const originPort = getPort(this.props.originCity, this.state.originAirport);
+  getOriginPort = async () => {
+    const originPort = await getPort(
+      this.props.originCity,
+      this.state.originAirport
+    );
+    this.setState({ originPort });
   };
-  getPortsFromFile = async () => {
-    this.setState({
-      destinationPort: ports.Places[0],
-      originPort: ports.Places[1]
-    });
-  };
-  getQuotes = () => {
-    const quotes = getQuotes(
+
+  //This is not finished since i couldn't reliably get airports
+  getQuotes = async () => {
+    const quotes = await getQuotes(
       this.state.destinationPort,
       this.state.originPort,
       this.state.date
     );
-    this.setState({ quotes });
-  };
-  getQuotesFromFile = () => {
-    const quotes = quotesResponse.Quotes[0];
     quotes
       ? this.setState({ quotes })
       : this.setState({ quotes: "no results" });
   };
+
   getData = async () => {
-    await this.getAirportsFromFile();
-    await this.getPortsFromFile();
-    this.getQuotesFromFile();
+    //this is not ideal
+    //await this.getDestinationAirport();
+    //await this.getOriginAirport();
+    //this.getQuotes();
   };
 
   componentDidMount() {
     this.setState({ date: getDate() });
-    this.getData();
+    //avoid sending API request every time component is mounted = user clicks 'show flights'
+    if (!this.state.originAirport || !this.state.destinationAirport) {
+      this.getData();
+    }
   }
+
   renderComponent = () => {
     if (!this.state.quotes) {
       return (
@@ -98,3 +106,31 @@ class Flights extends Component {
 }
 
 export default Flights;
+
+{
+  /*  FOR TESTING PURPOSES
+   getAirportsFromFile = () => {
+    this.setState({
+      destinationAirport: aiports[0],
+      originAirport: aiports[1]
+    });
+  }; 
+  getPortsFromFile = async () => {
+    this.setState({
+      destinationPort: ports.Places[0],
+      originPort: ports.Places[1]
+    });
+  };
+    getQuotesFromFile = () => {
+    const quotes = quotesResponse.Quotes[0];
+    quotes
+      ? this.setState({ quotes })
+      : this.setState({ quotes: "no results" });
+  };
+  getData = async () => {
+    await this.getAirportsFromFile();
+    await this.getPortsFromFile();
+    this.getQuotesFromFile();
+  };
+*/
+}

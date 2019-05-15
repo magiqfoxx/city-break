@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import NewLandmarkSlate from "./NewLandmarkSlate";
+import LandmarkSlate from "./LandmarkSlate";
 import Loading from "../Loading";
 
 import { getLandmarksData } from "./helpers.js";
@@ -8,15 +8,35 @@ import { getLandmarksData } from "./helpers.js";
 class Landmarks extends Component {
   state = {};
 
+  getLandmarks = async () => {
+    const landmarks = await getLandmarksData(
+      this.props.cityLAT,
+      this.props.cityLNG
+    );
+    landmarks
+      ? this.setState({ landmarks })
+      : this.setState({ landmarks: "no results" });
+  };
   componentDidMount() {
-    this.getLandmarksData(this.props.cityLAT, this.props.cityLNG);
+    this.getLandmarks();
   }
 
   renderContent = () => {
-    if (this.state.landmarks) {
-      return this.state.landmarks.slice(0, 4).map(landmark => {
-        return <NewLandmarkSlate landmark={landmark} key={landmark} />;
-      });
+    const landmarks = this.state.landmarks;
+    if (landmarks) {
+      return landmarks.constructor === Array ? (
+        this.state.landmarks.slice(0, 4).map(landmark => {
+          return (
+            <LandmarkSlate
+              landmark={landmark}
+              key={landmark.id}
+              photoRef={landmark.photos[0].photo_reference}
+            />
+          );
+        })
+      ) : (
+        <p>No results</p>
+      );
     } else {
       return <Loading />;
     }

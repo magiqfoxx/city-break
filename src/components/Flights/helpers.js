@@ -28,16 +28,26 @@ export const getPort = async (city, airport) => {
   }
 };
 
+const getAirport = airports => {
+  //trying to find an airport amidst rail stations
+  const results = airports.filter(airport => {
+    return airport.codeIcaoAirport;
+  });
+  console.log(results);
+  return results[0];
+};
 export const getNearestAirport = async (lat, lng) => {
   try {
     const locationAirports = await aviationEdge.get("", {
       params: {
         lat: lat,
         lng: lng,
-        distance: 100
+        distance: 1000
       }
     });
-    return locationAirports.data[0];
+
+    const airport = getAirport(locationAirports.data);
+    return airport;
   } catch (error) {
     console.log(error);
   }

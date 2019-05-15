@@ -12,7 +12,7 @@ const BasicInfo = props => {
       return <Loading />;
     } else {
       return (
-        <div className="component component--basic-info">
+        <div className="component component--city-info">
           <h3>
             <b>Population:</b> {renderPopulation(props.city.population)}
           </h3>
@@ -25,10 +25,13 @@ const BasicInfo = props => {
       );
     }
   };
-
+  const getTime = async () => {
+    const timeNow = await getCityTime(props.city);
+    setTimeNow(timeNow);
+  };
   useEffect(() => {
     if (props.city && !timeNow) {
-      getCityTime(props.city);
+      getTime();
     }
   }, [props.city]);
 

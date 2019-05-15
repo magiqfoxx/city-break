@@ -3,20 +3,31 @@ import React, { Component } from "react";
 import ErrorBoundary from "../ErrorBoundary";
 import CityPure from "./CityPure";
 
-import { getCity } from "./helpers.js";
+import { getCityData, getLocation } from "./helpers.js";
 
 /* Add: local news, booking com airbnb? flights */
 class City extends Component {
   //Location is where Client is
   //Destination what they've put in the search
 
-  //this.props.match.params.city comes from the router /city/:city
-  state = { cityName: this.props.match.params.city };
+  state = {};
 
+  setCityData = async () => {
+    const city = await getCityData(this.props.match.params.city);
+    this.setState({ city });
+  };
+  setLocation = async () => {
+    const location = await getLocation();
+    this.setState({
+      originLat: location.coords.latitude,
+      originLng: location.coords.longitude
+    });
+  };
   componentDidMount() {
-    //this.getCityData(this.cityName);
-    this.getCityDataFromFile();
-    this.getLocation();
+    //this.props.match.params.city comes from the router /city/:city
+    this.setState({ cityName: this.props.match.params.city });
+    this.setCityData();
+    this.setLocation();
   }
 
   render() {

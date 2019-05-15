@@ -10,7 +10,7 @@ const addPlus = lng => {
   }
 };
 
-export const getCity = async (lat, lng) => {
+export const getCityId = async (lat, lng) => {
   //get city name by location
   try {
     const GeoDBCityId = await geoDB.get("cities?", {
@@ -25,10 +25,15 @@ export const getCity = async (lat, lng) => {
     console.log(error);
   }
 };
-
-export const getLocation = () => {
+const getPosition = () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+export const getLocation = async () => {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(this.setLocation);
+    const position = await getPosition();
+    return position;
   } else {
     console.log("Geolocation is not supported by this browser.");
   }
@@ -40,9 +45,7 @@ export const setLocation = position => {
   });
 };
 export const getCityDataFromFile = () => {
-  this.setState({
-    city: geoNamesData.geonames[0]
-  });
+  return geoNamesData.geonames[0];
 };
 export const getCityData = async city => {
   const cityResponse = await geoNames.get("", {
@@ -50,7 +53,5 @@ export const getCityData = async city => {
       q: city
     }
   });
-  this.setState({
-    city: cityResponse.data.geonames[0]
-  });
+  return cityResponse.data.geonames[0];
 };
